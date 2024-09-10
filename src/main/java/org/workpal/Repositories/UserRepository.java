@@ -14,7 +14,7 @@ public class UserRepository implements UserRepositoryInterface {
 
     @Override
     public User save(User user) {
-        String sql = "INSERT INTO users (username, password, email, address) VALUES (?, ?, ?, ?) RETURNING id";
+        String sql = "INSERT INTO users (username, password, email, address) VALUES (?, ?, ?, ?) RETURNING Id";
         try (Connection conn = JdbcConnection.getConnection().orElseThrow(SQLException::new);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -23,9 +23,13 @@ public class UserRepository implements UserRepositoryInterface {
             pstmt.setString(3, user.getEmail());
             pstmt.setString(4, user.getAddress());
 
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                user.setId(rs.getInt("id"));
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows > 0) {
+                try (ResultSet rs = pstmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        user.setId(rs.getInt(1)); // Get the generated key
+                    }
+                }
             }
         } catch (SQLException ex) {
             System.out.println("Error saving user: " + ex.getMessage());
@@ -44,11 +48,11 @@ public class UserRepository implements UserRepositoryInterface {
 
             if (rs.next()) {
                 User user = new User(
-                        rs.getInt("id"),
-                        rs.getString("username"),
-                        rs.getString("password"),
-                        rs.getString("email"),
-                        rs.getString("address")
+                        rs.getInt("Id"),
+                        rs.getString("Username"),
+                        rs.getString("Password"),
+                        rs.getString("Email"),
+                        rs.getString("Address")
                 );
                 return Optional.of(user);
             }
@@ -68,11 +72,11 @@ public class UserRepository implements UserRepositoryInterface {
 
             while (rs.next()) {
                 User user = new User(
-                        rs.getInt("id"),
-                        rs.getString("username"),
-                        rs.getString("password"),
-                        rs.getString("email"),
-                        rs.getString("address")
+                        rs.getInt("Id"),
+                        rs.getString("Username"),
+                        rs.getString("Password"),
+                        rs.getString("Email"),
+                        rs.getString("Address")
                 );
                 users.add(user);
             }
@@ -84,7 +88,7 @@ public class UserRepository implements UserRepositoryInterface {
 
     @Override
     public void update(User user) {
-        String sql = "UPDATE users SET username = ?, password = ?, email = ?, address = ? WHERE id = ?";
+        String sql = "UPDATE users SET Username = ?, Password = ?, Email = ?, Address = ? WHERE Id = ?";
         try (Connection conn = JdbcConnection.getConnection().orElseThrow(SQLException::new);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -102,7 +106,7 @@ public class UserRepository implements UserRepositoryInterface {
 
     @Override
     public void delete(Long id) {
-        String sql = "DELETE FROM users WHERE id = ?";
+        String sql = "DELETE FROM users WHERE Id = ?";
         try (Connection conn = JdbcConnection.getConnection().orElseThrow(SQLException::new);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 

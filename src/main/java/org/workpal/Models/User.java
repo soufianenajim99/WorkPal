@@ -15,6 +15,13 @@ private String Address;
         Address = address;
     }
 
+    public User(String username, String password, String email, String address) {
+        Username = username;
+        Password = password;
+        Email = email;
+        Address = address;
+    }
+
     static {
         System.out.println("User initialized");
     }
