@@ -1,4 +1,9 @@
 package org.workpal.Repositories;
 
-public class MemberRepository {
+import org.workpal.Repositories.RepositoryInterfaces.MemberRepositoryInterface;
+
+public class MemberRepository<T> extends UserRepository implements MemberRepositoryInterface {
+    public MemberRepository(Class<T> type) {
+        super(type);
+    }
 }

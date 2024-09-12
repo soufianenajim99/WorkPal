@@ -1,4 +1,6 @@
 package org.workpal.Repositories.RepositoryInterfaces;
 
-public interface AdminRepositoryInterface {
+
+public interface AdminRepositoryInterface extends UserRepositoryInterface {
+
 }

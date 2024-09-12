@@ -1,4 +1,9 @@
 package org.workpal.Repositories;
 
-public class AdminRepository {
+import org.workpal.Repositories.RepositoryInterfaces.AdminRepositoryInterface;
+
+public class AdminRepository<T> extends UserRepository  implements AdminRepositoryInterface {
+    public AdminRepository(Class<T> type) {
+        super(type);
+    }
 }
