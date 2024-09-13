@@ -64,6 +64,7 @@ public class UserRepository<T> implements UserRepositoryInterface {
                         rs.getString("Email"),
                         rs.getString("Address")
                 );
+
                 return Optional.of(user);
             }
         } catch (SQLException | ReflectiveOperationException ex) {

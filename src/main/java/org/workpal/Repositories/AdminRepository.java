@@ -6,4 +6,5 @@ public class AdminRepository<T> extends UserRepository  implements AdminReposito
     public AdminRepository(Class<T> type) {
         super(type);
     }
+
 }
