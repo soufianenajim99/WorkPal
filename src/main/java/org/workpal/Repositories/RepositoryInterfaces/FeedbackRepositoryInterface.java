@@ -1,4 +1,4 @@
 package org.workpal.Repositories.RepositoryInterfaces;
 
-public class FeedbackRepositoryInterface {
+public interface FeedbackRepositoryInterface {
 }
