@@ -6,7 +6,8 @@ public class Espace {
     private int id;
     private String name;
     private String location;
-    private int categoryId;
+    private Category category;
+    private Manager manager;
     private ArrayList<Member> memberList;
     private ArrayList<DefaultService> defaultServices;
 
@@ -17,27 +18,37 @@ public class Espace {
     }
 
 
-
-    public Espace(String name, String location, int categoryId) {
+    public Espace(String name, String location, Category category, Manager manager) {
+        this();
         this.name = name;
         this.location = location;
-        this.categoryId = categoryId;
+        this.category = category;
+        this.manager = manager;
     }
 
-    public Espace(int id, String name, String location, int categoryId) {
+    public Espace(int id, String name, String location, Category category, Manager manager) {
         this();
         this.id = id;
         this.name = name;
         this.location = location;
-        this.categoryId = categoryId;
+        this.category = category;
+        this.manager = manager;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Manager getManager() {
+        return manager;
+    }
+
+    public void setManager(Manager manager) {
+        this.manager = manager;
     }
 
     public int getId() {
@@ -97,7 +108,8 @@ public void addMember(Member member){
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", location='" + location + '\'' +
-                ", category='"+ categoryId + '\''+
+                ", category='"+ category + '\''+
+                ", manager='"+ manager + '\''+
                 ", has " + defaultServices.size() +" Services . and " + memberList.size() + "Members";
         for(int i=0; i< defaultServices.size(); i++){
             result = result + "\n Service "+(i+1)+" name :  "+defaultServices.get(i).getName();

@@ -43,6 +43,37 @@ public class UserRepository<T> implements UserRepositoryInterface {
         return savedUser;
     }
 
+    public Optional<T> login(String email, String password) {
+        String tableName = type.getSimpleName().toLowerCase() + "s"; // Dynamically determine table name
+        String sql = "SELECT * FROM " + tableName + " WHERE email = ? AND password = ?";
+
+        try (Connection conn = JdbcConnection.getConnection().orElseThrow(SQLException::new);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, email);
+            pstmt.setString(2, password);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+
+                Constructor<T> constructor = type.getConstructor(int.class, String.class, String.class, String.class, String.class);
+                T user = constructor.newInstance(
+                        rs.getInt("Id"),
+                        rs.getString("Username"),
+                        rs.getString("Password"),
+                        rs.getString("Email"),
+                        rs.getString("Address")
+                );
+
+                return Optional.of(user);
+            }
+        } catch (SQLException | ReflectiveOperationException ex) {
+            System.out.println("Error during login: " + ex.getMessage());
+        }
+
+        return Optional.empty();
+    }
+
     @Override
     public Optional<T> findById(int id) {
         String tableName = type.getSimpleName().toLowerCase() + "s"; // Dynamically determine table name

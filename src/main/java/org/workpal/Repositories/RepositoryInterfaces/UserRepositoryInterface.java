@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface UserRepositoryInterface<T>{
     T save(User user);
+    Optional<T> login(String email, String password);
     Optional<T> findById(int id);
     List<T> findAll();
     void update(User user);

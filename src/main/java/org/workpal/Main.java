@@ -1,11 +1,9 @@
 package org.workpal;
 
-import org.workpal.Models.Admin;
-import org.workpal.Models.Member;
-import org.workpal.Models.User;
-import org.workpal.Repositories.AdminRepository;
-import org.workpal.Repositories.MemberRepository;
-import org.workpal.Repositories.UserRepository;
+import org.workpal.Models.*;
+import org.workpal.Repositories.*;
+import org.workpal.Services.AuthenticationService;
+import org.workpal.Services.CategoryService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,13 +14,41 @@ import java.util.Optional;
 public class Main {
     public static void main(String[] args) {
 
-        AdminRepository<Admin> ur = new AdminRepository<>(Admin.class);
-        MemberRepository<Member> mr = new MemberRepository<Member>(Member.class);
+        EspaceRepository espaceRepo = new EspaceRepository();
+        ManagerRepository<Manager> managerRepo = new ManagerRepository<Manager>(Manager.class);
+        CategoryRepository categoryRepo = new CategoryRepository();
+        CategoryService categoryService = new CategoryService(categoryRepo);
 
-        Member member1 = new Member("soufiane","soufiane","ssss","soufiane");
-        Admin user1 = new Admin(13,"soufiane","soufiane","soufiane","soufiane");
+        // Create a new Category and Manager for testing
+        Category category = new Category( 4,"Fitness");
+        Manager manager = new Manager( 20,"johndoe", "password123", "john.doe@example.com", "123 Elm Street");
 
-//      ur.update(user1);
-      mr.save(member1);
+        // Create a new Espace
+        Espace newEspace = new Espace("Central Gym", "Downtown", category, manager);
+//        managerRepo.save(manager);
+//        categoryService.createCategory(category);
+        // Save the new Espace
+      espaceRepo.save(newEspace);
+//        System.out.println("Saved Espace: " + savedEspace);
+//
+//        // Retrieve the Espace by ID
+//        Espace retrievedEspace = espaceRepo.findById(savedEspace.getId()).orElse(null);
+//        System.out.println("Retrieved Espace: " + retrievedEspace);
+//
+//        // Update the Espace
+//        if (retrievedEspace != null) {
+//            retrievedEspace.setName("Updated Gym Name");
+//            espaceRepo.update(retrievedEspace);
+//            System.out.println("Updated Espace: " + espaceRepo.findById(retrievedEspace.getId()).orElse(null));
+//        }
+//
+//        // List all Espaces
+//        System.out.println("All Espaces: " + espaceRepo.findAll());
+//
+//        // Delete the Espace
+//        if (retrievedEspace != null) {
+//            espaceRepo.delete(retrievedEspace.getId());
+//            System.out.println("Deleted Espace. Remaining Espaces: " + espaceRepo.findAll());
+//        }
     }
 }
