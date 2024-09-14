@@ -9,6 +9,5 @@ public interface ServiceServiceInterface {
     void save(Service service);
     void update(Service service);
     void delete(int id);
-    Optional<Service> findById(int id);
-    List<Service> findAll();
+
 }

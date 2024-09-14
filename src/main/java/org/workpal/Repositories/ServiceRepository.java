@@ -59,50 +59,7 @@ public class ServiceRepository implements ServiceRepositoryInterface {
         }
     }
 
-    @Override
-    public Optional<Service> findById(int id) {
-        String sql = "SELECT * FROM services WHERE id = ?";
-        try (Connection conn = JdbcConnection.getConnection().orElseThrow(SQLException::new);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setInt(1, id);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    Service service = new Service(
-                            rs.getInt("id"),
-                            rs.getString("name"),
-                            rs.getString("description"),
-                            rs.getDouble("price")
-                    );
-                    return Optional.of(service);
-                }
-            }
-        } catch (SQLException ex) {
-            System.out.println("Error finding service by ID: " + ex.getMessage());
-        }
-        return Optional.empty();
-    }
 
-    @Override
-    public List<Service> findAll() {
-        List<Service> services = new ArrayList<>();
-        String sql = "SELECT * FROM services";
-        try (Connection conn = JdbcConnection.getConnection().orElseThrow(SQLException::new);
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
 
-            while (rs.next()) {
-                Service service = new Service(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("description"),
-                        rs.getDouble("price")
-                );
-                services.add(service);
-            }
-        } catch (SQLException ex) {
-            System.out.println("Error finding all services: " + ex.getMessage());
-        }
-        return services;
-    }
 }
