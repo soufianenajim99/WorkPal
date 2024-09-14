@@ -11,4 +11,5 @@ public interface EspaceRepositoryInterface {
     List<Espace> findAll();
     void update(Espace espace);
     void delete(int id);
+
 }

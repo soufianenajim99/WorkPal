@@ -3,33 +3,35 @@ package org.workpal.Models;
 import java.time.LocalDate;
 
 public class Reservation {
-    private int memberId;
-    private int espaceId;
+    private Member member;
+    private Espace espace;
     private LocalDate reservationDate;
+
+    public Reservation(Member member, Espace espace, LocalDate reservationDate) {
+        this.member = member;
+        this.espace = espace;
+        this.reservationDate = reservationDate;
+    }
 
     public Reservation() {
     }
 
-    public Reservation(int memberId, int espaceId, LocalDate reservationDate) {
-        this.memberId = memberId;
-        this.espaceId = espaceId;
-        this.reservationDate = reservationDate;
+
+
+    public Member getMember() {
+        return member;
     }
 
-    public int getMemberId() {
-        return memberId;
+    public void setMember(Member member) {
+        this.member = member;
     }
 
-    public void setMemberId(int memberId) {
-        this.memberId = memberId;
+    public Espace getEspace() {
+        return espace;
     }
 
-    public int getEspaceId() {
-        return espaceId;
-    }
-
-    public void setEspaceId(int espaceId) {
-        this.espaceId = espaceId;
+    public void setEspace(Espace espace) {
+        this.espace = espace;
     }
 
     public LocalDate getReservationDate() {
@@ -43,8 +45,8 @@ public class Reservation {
     @Override
     public String toString() {
         return "Reservation{" +
-                "memberId=" + memberId +
-                ", espaceId=" + espaceId +
+                "member=" + member +
+                ", espace=" + espace +
                 ", reservationDate=" + reservationDate +
                 '}';
     }
