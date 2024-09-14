@@ -29,13 +29,5 @@ public class ServiceService implements ServiceServiceInterface {
         serviceRepo.delete(id);
     }
 
-    @Override
-    public Optional<Service> findById(int id) {
-        return serviceRepo.findById(id);
-    }
 
-    @Override
-    public List<Service> findAll() {
-        return serviceRepo.findAll();
-    }
 }
