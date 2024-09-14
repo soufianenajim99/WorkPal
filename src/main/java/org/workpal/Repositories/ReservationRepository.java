@@ -62,7 +62,9 @@ public class ReservationRepository implements ReservationRepositoryInterface {
             statement.setInt(2, espaceId);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                Member member = memberRepo.findById(memberId).orElseThrow(() -> new SQLException("Member not found"));
+
+                Optional<Member> optionalMember = memberRepo.findById(memberId);
+                Member member = optionalMember.get();
                 Espace espace = espaceRepo.findById(espaceId).orElseThrow(() -> new SQLException("Espace not found"));
                 LocalDate reservationDate = rs.getDate("reservation_date").toLocalDate();
                 return Optional.of(new Reservation(member, espace, reservationDate));
@@ -84,7 +86,8 @@ public class ReservationRepository implements ReservationRepositoryInterface {
             while (rs.next()) {
                 Espace espace = espaceRepo.findById(rs.getInt("espace_id")).orElseThrow(() -> new SQLException("Espace not found"));
                 LocalDate reservationDate = rs.getDate("reservation_date").toLocalDate();
-                Member member = memberRepo.findById(memberId).orElseThrow(() -> new SQLException("Member not found"));
+                Optional<Member> optionalMember = memberRepo.findById(memberId);
+                Member member = optionalMember.get();
                 reservations.add(new Reservation(member, espace, reservationDate));
             }
         } catch (SQLException e) {
@@ -102,7 +105,9 @@ public class ReservationRepository implements ReservationRepositoryInterface {
             statement.setInt(1, espaceId);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                Member member = memberRepo.findById(rs.getInt("member_id")).orElseThrow(() -> new SQLException("Member not found"));
+
+                Optional<Member> optionalMember = memberRepo.findById(rs.getInt("member_id"));
+                Member member = optionalMember.get();
                 LocalDate reservationDate = rs.getDate("reservation_date").toLocalDate();
                 Espace espace = espaceRepo.findById(espaceId).orElseThrow(() -> new SQLException("Espace not found"));
                 reservations.add(new Reservation(member, espace, reservationDate));
@@ -121,7 +126,9 @@ public class ReservationRepository implements ReservationRepositoryInterface {
              PreparedStatement statement = connection.prepareStatement(sql)) {
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                Member member = memberRepo.findById(rs.getInt("member_id")).orElseThrow(() -> new SQLException("Member not found"));
+                Optional<Member> optionalMember = memberRepo.findById(rs.getInt("member_id"));
+                Member member = optionalMember.get();
+
                 Espace espace = espaceRepo.findById(rs.getInt("espace_id")).orElseThrow(() -> new SQLException("Espace not found"));
                 LocalDate reservationDate = rs.getDate("reservation_date").toLocalDate();
                 reservations.add(new Reservation(member, espace, reservationDate));
