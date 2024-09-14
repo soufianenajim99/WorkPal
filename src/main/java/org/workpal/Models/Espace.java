@@ -8,6 +8,7 @@ public class Espace {
     private String location;
     private Category category;
     private Manager manager;
+    private ArrayList<Event> eventList;
     private ArrayList<Member> memberList;
     private ArrayList<DefaultService> defaultServices;
 
@@ -15,6 +16,7 @@ public class Espace {
     public Espace() {
         this.defaultServices = new ArrayList<>();
         this.memberList = new ArrayList<>();
+        this.eventList = new ArrayList<>();
     }
 
 
@@ -101,6 +103,20 @@ public void addMember(Member member){
         this.memberList = memberList;
     }
 
+    public ArrayList<Event> getEventList() {
+        return eventList;
+    }
+
+    public void setEventList(ArrayList<Event> eventList) {
+        this.eventList = eventList;
+    }
+    public void addEvent(Event event) {
+        this.eventList.add(event);
+    }
+    public void removeEvent(Event event) {
+        this.eventList.remove(event);
+    }
+
     @Override
     public String toString() {
         String result  =
@@ -110,13 +126,16 @@ public void addMember(Member member){
                 ", location='" + location + '\'' +
                 ", category='"+ category + '\''+
                 ", manager='"+ manager + '\''+
-                ", has " + defaultServices.size() +" Services . and " + memberList.size() + "Members";
+                ", has " + defaultServices.size() +" Services . and " + memberList.size() + "Members"+" and " + eventList.size()+" event";
         for(int i=0; i< defaultServices.size(); i++){
             result = result + "\n Service "+(i+1)+" name :  "+defaultServices.get(i).getName();
         };
 
         for(int i=0; i< memberList.size(); i++){
             result = result + "\n Member "+(i+1)+" Username :  "+memberList.get(i).getUsername();
+        };
+        for(int i=0; i< eventList.size(); i++){
+            result = result + "\n Event "+(i+1)+" name :  "+eventList.get(i).getName();
         };
 
         result = result + "}";
